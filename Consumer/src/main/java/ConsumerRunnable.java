@@ -1,16 +1,11 @@
-import com.lambdaworks.redis.RedisConnection;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.DeliverCallback;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.json.JSONObject;
-import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.Protocol;
-import redis.clients.jedis.UnifiedJedis;
-import redis.clients.jedis.providers.PooledConnectionProvider;
 
 public class ConsumerRunnable implements Runnable {
 
@@ -37,7 +32,7 @@ public class ConsumerRunnable implements Runnable {
         JSONObject data = new JSONObject(message);
         SkierDataModel skier = new SkierDataModel(data.get("resort"), data.get("season"), data.get("day"),
             data.get("time"), data.get("liftID"));
-        try (Jedis jedis = jedisPool.getResource()) {
+        try (Jedis jedis = this.jedisPool.getResource()) {
           jedis.sadd("skier:" + data.get("skier").toString(), skier.toString());
         }
         this.channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);

@@ -29,7 +29,7 @@ public class SkiersClient2 {
     ApiClient client = skierApi.getApiClient();
     BlockingQueue<SkiersRunner> dataBuffer = new LinkedBlockingQueue<>();
 
-    client.setBasePath("http://lb2-4149791.us-west-2.elb.amazonaws.com:8080/LiftServer_war/");
+    client.setBasePath("http://ec2-35-92-85-30.us-west-2.compute.amazonaws.com:8080/LiftServer_war/");
 
     File file = new File("LiftRecordPerformanceSpring.csv");
     dataPerformance.add(new String[]{"Start Time", "Request Type", "Latency", "Response Code"});
@@ -94,7 +94,7 @@ public class SkiersClient2 {
     System.out.println("Mean response time = " + calc.mean() + "/ms");
     System.out.println("Median response time = " + calc.median() + "/ms");
     System.out.println("Throughput = " +
-        NUM_POSTS/(int) (end - start) + "/ms");
+        NUM_POSTS/(end - start) + "/ms");
     System.out.println("p99 Response Time = " + calc.percentile(99) + "/ms");
     System.out.println("Min = " + calc.min() + "/s" + " Max = " + calc.max() + "/ms");
 

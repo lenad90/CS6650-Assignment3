@@ -30,9 +30,6 @@ public class SkiersServlet extends HttpServlet {
       Connection connection = factory.newConnection();
       this.pool = new GenericObjectPool<>(new ChannelBufferFactory(connection));
       this.pool.setMaxTotal(NUM_CHANNELS);
-      //      for (int i = 0; i < NUM_CHANNELS; i++) {
-//        pool.addObject();
-//      }
     } catch (Exception e) {
       System.out.println("Error in creating pool.");
       e.printStackTrace();
